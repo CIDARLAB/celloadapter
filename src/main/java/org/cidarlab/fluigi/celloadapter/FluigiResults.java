@@ -9,8 +9,8 @@ import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.cidarlab.fluigi.celloadapter.celloresults.BioNetList;
-import org.cidarlab.fluigi.celloadapter.celloresults.ResponseFunction;
+import org.cidarlab.fluigi.celloadapter.results.BioNetList;
+import org.cidarlab.fluigi.celloadapter.results.ResponseFunction;
 
 /**
  *
