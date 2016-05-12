@@ -23,7 +23,7 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 public class BioNetList extends Result {
 
     final String pattern = "\\s+";
-    SimpleDirectedGraph<String, DefaultEdge> directedGraph;
+    private SimpleDirectedGraph<String, DefaultEdge> directedGraph;
 
     /**
      *
@@ -71,6 +71,10 @@ public class BioNetList extends Result {
 
     private String cleanToken(String token) {
         return token.replaceFirst("((\\w+_)|(p))", "");
+    }
+
+    public SimpleDirectedGraph<String, DefaultEdge> getDirectedGraph() {
+        return directedGraph;
     }
     
 }

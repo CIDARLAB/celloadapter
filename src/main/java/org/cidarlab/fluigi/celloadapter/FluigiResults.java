@@ -18,13 +18,15 @@ import org.cidarlab.fluigi.celloadapter.results.ResponseFunction;
  */
 public class FluigiResults {
     
-    BioNetList gateNetList;
+    private BioNetList gateNetList;
     
     HashMap<String, ResponseFunction> gateResponses;
     
     ArrayList<String> filesList;
     
     String jobID;
+    
+    
     
     public FluigiResults() {
         gateResponses = new HashMap<>();
@@ -77,10 +79,7 @@ public class FluigiResults {
         return retList;
     }
 
-    
-
-    
-    
-    
-    
+    public BioNetList getGateNetList() {
+        return gateNetList;
+    }
 }
