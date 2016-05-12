@@ -13,7 +13,6 @@ import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 import static org.cidarlab.fluigi.celloadapter.CelloEndPoints.SEP;
-import org.jgrapht.DirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
@@ -51,13 +50,14 @@ public class BioNetList extends Result {
                 //Find out the number of connecting nodes 
                 for (int i = 0; i < tokens.length; i++) {
                     token = tokens[i];
+                    token = cleanToken(token); // Clears out the ??_ and the p prefixes
                     //Add vertex if it isn't already present in the graph
                     if (!token.matches("\\d+")) {
                         if (!directedGraph.containsVertex(token)) {
                             directedGraph.addVertex(token);
                         }
                         if (i > 0) {
-                            directedGraph.addEdge(tokens[i], tokens[0]);
+                            directedGraph.addEdge(cleanToken(tokens[i]), cleanToken(tokens[0]));
                         }
                     }
 
@@ -69,4 +69,8 @@ public class BioNetList extends Result {
         }
     }
 
+    private String cleanToken(String token) {
+        return token.replaceFirst("((\\w+_)|(p))", "");
+    }
+    
 }
