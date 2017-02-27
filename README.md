@@ -17,7 +17,7 @@ The goal of this project is to provide an archetype for building API adapters th
 
 ```
 Cello celloadapter = new Cello(username, password);
-FluigiResults fluigiResults = celloadapter.getFluigiResults(inputPathName);
+FluigiResults fluigiResults = celloadapter.getFluigiResults(jobname);
 
 ///Access Result Objects
 BioNetList netlist = fluigiResults.getGateNetList();
