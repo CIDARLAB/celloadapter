@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cidarlab.fluigi.celloadapter;
+package org.cidarlab.celloadapter;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.JSONParser;
-import static org.cidarlab.fluigi.celloadapter.CelloEndPoints.*;
+import static org.cidarlab.celloadapter.CelloEndPoints.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
