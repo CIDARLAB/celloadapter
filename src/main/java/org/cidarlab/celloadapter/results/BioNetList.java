@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cidarlab.fluigi.celloadapter.results;
+package org.cidarlab.celloadapter.results;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
@@ -12,7 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
-import static org.cidarlab.fluigi.celloadapter.CelloEndPoints.SEP;
+
+import org.cidarlab.celloadapter.CelloEndPoints;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
@@ -39,7 +40,7 @@ public class BioNetList extends Result {
 
     @Override
     protected void parseFile() {
-        File fo = new File(DOWNLOAD_DIRECTORY + SEP + jobID + SEP + fileName);
+        File fo = new File(DOWNLOAD_DIRECTORY + CelloEndPoints.SEP + jobID + CelloEndPoints.SEP + fileName);
         try {
             LineIterator iter = FileUtils.lineIterator(fo);
             while (iter.hasNext()) {

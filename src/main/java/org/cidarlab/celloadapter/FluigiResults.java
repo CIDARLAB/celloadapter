@@ -3,31 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cidarlab.fluigi.celloadapter;
+package org.cidarlab.celloadapter;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import org.cidarlab.fluigi.celloadapter.results.BioNetList;
-import org.cidarlab.fluigi.celloadapter.results.ResponseFunction;
+import org.cidarlab.celloadapter.results.BioNetList;
+import org.cidarlab.celloadapter.results.ResponseFunction;
 
 /**
  *
  * @author krishna
  */
-public class FluigiResults {
+public class FluigiResults extends Results {
     
     private BioNetList gateNetList;
     
     HashMap<String, ResponseFunction> gateResponses;
-    
-    ArrayList<String> filesList;
-    
-    String jobID;
-    
-    
-    
+
+
     public FluigiResults() {
         gateResponses = new HashMap<>();
     }
@@ -58,25 +53,6 @@ public class FluigiResults {
             responseFunction = new ResponseFunction(jobID, s);
             gateResponses.put(responseFunction.getName(), responseFunction);
         }
-    }
-
-    private String findFile(String pattern) {
-        for(String s : filesList){
-            if(s.matches(pattern)){
-                return s;
-            }
-        }
-        return null;
-    }
-
-    private ArrayList<String> findFiles(String pattern) {
-        ArrayList<String> retList = new ArrayList<>();
-        for(String s : filesList){
-            if(s.matches(pattern)){
-               retList.add(s);
-            }
-        }
-        return retList;
     }
 
     public BioNetList getGateNetList() {

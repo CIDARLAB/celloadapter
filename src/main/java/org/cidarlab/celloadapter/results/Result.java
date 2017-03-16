@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.cidarlab.fluigi.celloadapter.results;
+package org.cidarlab.celloadapter.results;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
@@ -14,9 +14,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.cidarlab.fluigi.celloadapter.Cello;
-import org.cidarlab.fluigi.celloadapter.CelloEndPoints;
-import static org.cidarlab.fluigi.celloadapter.CelloEndPoints.SEP;
+
+import org.cidarlab.celloadapter.CelloEndPoints;
+import org.cidarlab.celloadapter.Cello;
 
 /**
  *
@@ -45,13 +45,13 @@ public class Result {
     }
     
     protected void saveInputStreamToFile(InputStream inputStream) throws FileNotFoundException, IOException{
-        String directorypath = DOWNLOAD_DIRECTORY + SEP + jobID;
+        String directorypath = DOWNLOAD_DIRECTORY + CelloEndPoints.SEP + jobID;
         File fo = new File(directorypath);
         if(!fo.exists()){
             fo.mkdirs();
         }
         
-        fo = new File(directorypath + SEP + fileName);
+        fo = new File(directorypath + CelloEndPoints.SEP + fileName);
         if(fo.exists()){
             fo.delete();
             fo.createNewFile();
