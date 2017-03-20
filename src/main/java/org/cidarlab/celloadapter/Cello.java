@@ -72,7 +72,14 @@ public class Cello {
         
         return ret;
     }
-    
+
+    /**
+     * Gets the result set
+     * @param jobID
+     * @return
+     * @throws UnirestException
+     * @throws IOException
+     */
     public FluigiResults getFluigiResults(String jobID) throws UnirestException, IOException{
         String requestURL = RESULTS + SEP + jobID;
         try {
@@ -102,5 +109,48 @@ public class Cello {
         
         return fluigiResults;
     }
+
+    /**
+     * Submits a Job that uses the default UCF
+     * @param job
+     */
+    public void submitJob(Job job) throws UnirestException {
+        response = Unirest.post(SUBMIT).fields(job.getRequestFields()).asJson();
+
+    }
+
+    /**
+     * Submits a Job with a specified UCF
+     * @param job
+     * @param ucf
+     */
+    public void submitJob(Job job, UCF ucf) throws UnirestException {
+        /*
+        TODO: Create the whole UCF and set it up
+         */
+        submitUCF(ucf);
+        validateUCF(ucf);
+        submitJob(job);
+    }
+
+    /**
+     * Validates the UCF (Note, the UCF has to be uploaded first
+     * @param ucf
+     */
+    public boolean validateUCF(UCF ucf) {
+        //TODO: Add code to validate the UCF. For now it just return true.
+        return true;
+    }
+
+    /**
+     * Submits a UCF
+     * @param ucf
+     */
+    public void submitUCF(UCF ucf) throws UnirestException {
+        response = Unirest.post(UCF + SEP + ucf.getFilename()).queryString("filetext",ucf.getFiletext()).asJson();
+
+    }
+
+
     
 }

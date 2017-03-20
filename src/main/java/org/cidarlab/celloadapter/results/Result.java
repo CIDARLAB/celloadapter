@@ -22,7 +22,7 @@ import org.cidarlab.celloadapter.Cello;
  *
  * @author krishna
  */
-public class Result {
+public abstract class Result {
     String fileName;
     String jobID;
     protected String DOWNLOAD_DIRECTORY = "./cello_data";
@@ -70,7 +70,5 @@ public class Result {
         
     }  
     
-    protected void parseFile(){
-        
-    }
+    abstract protected void parseFile();
 }
