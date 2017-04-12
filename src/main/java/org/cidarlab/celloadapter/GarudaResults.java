@@ -1,6 +1,7 @@
 package org.cidarlab.celloadapter;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.cidarlab.celloadapter.results.OutputHistogram;
 import org.cidarlab.celloadapter.results.ResponseFunction;
 import org.cidarlab.celloadapter.results.BioNetList;
 
@@ -18,8 +19,11 @@ public class GarudaResults extends Results{
 
     HashMap<String, ResponseFunction> gateResponses;
 
+    HashMap<String, OutputHistogram> truth_histograms;
+
     public GarudaResults(){
         gateResponses = new HashMap<>();
+        truth_histograms = new HashMap<>();
     }
 
     public GarudaResults(String jobidString, ArrayList<String> fileslist) throws UnirestException, IOException {
@@ -43,6 +47,14 @@ public class GarudaResults extends Results{
         }
 
         //3. Get either the eugene or the design space files
+        //TODO: Need to probably just give the file link or the text
 
+        //4. Get the Truth Table Histograms
+        ArrayList<String> histogramfiles = findFiles("(.*)_truth.txt");
+        OutputHistogram histogram;
+        for(String s : histogramfiles){
+            histogram = new OutputHistogram(jobID,s);
+            truth_histograms.put(histogram.getName(),histogram);
+        }
     }
 }
