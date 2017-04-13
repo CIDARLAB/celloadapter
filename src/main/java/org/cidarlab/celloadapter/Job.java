@@ -13,6 +13,10 @@ public class Job {
         this.jobID = jobID;
     }
 
+    public String getJobID() {
+        return jobID;
+    }
+
     public class Input{
 
         private final String name;
