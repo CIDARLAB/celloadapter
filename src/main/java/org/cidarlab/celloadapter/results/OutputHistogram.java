@@ -24,6 +24,7 @@ public class OutputHistogram extends Result {
     public OutputHistogram(String jobIDString, String filenameString) throws IOException, UnirestException {
         super(jobIDString, filenameString);
         this.name = filenameString;
+        histogramdata = new HashMap<>();
         downloadFile();
         parseFile();
     }
@@ -57,6 +58,13 @@ public class OutputHistogram extends Result {
                             labels.add(Integer.toBinaryString(count-1));
                             count++;
                         }
+
+                        //Create arrays for all the label
+
+                        for(String label: labels){
+                            histogramdata.put(label, new ArrayList<Float>());
+                        }
+
                         firstline_flag = false;
                         // Now this block will never get called
                         continue;
@@ -66,7 +74,7 @@ public class OutputHistogram extends Result {
                     //Each row has data that has to go into the following labels: "Scale" "00" "01" "10" "11" ...
                     String[] rowdata = line.split("\t");
                     addtoArray(labels.get(0), rowdata[0]);
-                    for(int rowindex =1; rowindex < rowdata.length ; rowindex++ ){
+                    for(int rowindex =1; rowindex < labels.size() ; rowindex++ ){
                         addtoArray(labels.get(rowindex), rowdata[rowindex]);
                     }
 

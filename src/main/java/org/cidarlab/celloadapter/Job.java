@@ -9,14 +9,18 @@ import java.util.Map;
  */
 public class Job {
 
+    public void setJobID(String jobID) {
+        this.jobID = jobID;
+    }
+
     public class Input{
 
         private final String name;
-        private int low;
-        private int high;
+        private double low;
+        private double high;
         private String seq;
 
-        public Input(String name, int low, int high, String seq){
+        public Input(String name, double low, double high, String seq){
             this.name = name;
             this.low = low;
             this.high = high;
@@ -78,7 +82,7 @@ public class Job {
      * @param high
      * @param seq
      */
-    public void addInput(String name, int low, int high, String seq){
+    public void addInput(String name, double low, double high, String seq){
         inputs.add(new Input(
                 name,
                 low,

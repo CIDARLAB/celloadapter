@@ -110,12 +110,40 @@ public class Cello {
         return fluigiResults;
     }
 
+    public GarudaResults getGarudaResults(String jobID) throws UnirestException, IOException{
+        String requestURL = RESULTS + SEP + jobID;
+
+        response = Unirest.get(requestURL).basicAuth(username, password).asJson();
+
+        String responsestring = response.getBody().toString();
+
+        JSONObject object = new JSONObject();
+
+        try {
+            object = (JSONObject)(new JSONParser().parse(responsestring));
+        } catch (ParseException ex) {
+            Logger.getLogger(Cello.class.getName()).log(Level.SEVERE, null, ex);
+            System.err.println(ex.getMessage());
+        }
+
+        JSONArray jSONArray = (JSONArray) object.get("files");
+        Iterator iter = jSONArray.iterator();
+        ArrayList<String> fileList = new ArrayList<>();
+        while (iter.hasNext()) {
+            fileList.add((String) iter.next());
+        }
+
+        GarudaResults garudaResults = new GarudaResults(jobID, fileList);
+
+        return garudaResults;
+    }
+
     /**
      * Submits a Job that uses the default UCF
      * @param job
      */
     public void submitJob(Job job) throws UnirestException {
-        response = Unirest.post(SUBMIT).fields(job.getRequestFields()).asJson();
+        response = Unirest.post(SUBMIT).basicAuth(username,password).fields(job.getRequestFields()).asJson();
 
     }
 
@@ -147,7 +175,7 @@ public class Cello {
      * @param ucf
      */
     public void submitUCF(UCF ucf) throws UnirestException {
-        response = Unirest.post(UCF + SEP + ucf.getFilename()).queryString("filetext",ucf.getFiletext()).asJson();
+        response = Unirest.post(UCF + SEP + ucf.getFilename()).basicAuth(username,password).body(ucf.getFiletext()).asJson();
 
     }
 

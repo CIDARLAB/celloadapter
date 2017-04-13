@@ -1,6 +1,7 @@
 package org.cidarlab.celloadapter;
 
-import org.json.simple.JSONObject;
+
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -10,13 +11,13 @@ import org.json.simple.parser.ParseException;
 public class UCF {
     private final String filename;
     private String filetext;
-    JSONObject ucfdatamodel;
+    JSONArray ucfdatamodel;
 
     public UCF(String filename, String filetext) throws ParseException {
         this.filename = filename;
         this.filetext = filetext;
         JSONParser parser = new JSONParser();
-        ucfdatamodel = (JSONObject) parser.parse(filetext);
+        ucfdatamodel = (JSONArray) parser.parse(filetext);
     }
 
     public String getFilename() {
