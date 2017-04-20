@@ -8,10 +8,15 @@ package org.cidarlab.celloadapter;
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
+import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Future;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.JSONParser;
@@ -143,7 +148,41 @@ public class Cello {
      * @param job
      */
     public void submitJob(Job job) throws UnirestException {
-        response = Unirest.post(SUBMIT).basicAuth(username,password).fields(job.getRequestFields()).asJson();
+        //response = Unirest.post(SUBMIT).basicAuth(username,password).fields(job.getRequestFields()).asJson();
+        Future<HttpResponse<JsonNode>> future = Unirest.post(SUBMIT)
+                //.header("accept", "application/json")
+                .basicAuth(username,password).fields(job.getRequestFields())
+                .asJsonAsync(new Callback<JsonNode>() {
+
+                    public void failed(UnirestException e) {
+                        System.out.println("The request has failed");
+                    }
+
+                    public void completed(HttpResponse<JsonNode> response) {
+                        int code = response.getStatus();
+                        //Map<String, String> headers = response.getHeaders();
+                        JsonNode body = response.getBody();
+                        InputStream rawBody = response.getRawBody();
+                    }
+
+                    public void cancelled() {
+                        System.out.println("The request has been cancelled");
+                    }
+
+                });
+
+
+
+    }
+
+    public void submitcurlJob(){
+        /*
+        curl -u "username:password" -X POST http://127.0.0.1:8080/submit --data-urlencode "id=demo001" --data-urlencode "verilog_text@demo_verilog.v" --data-urlencode "input_promoter_data@demo_inputs.txt" --data-urlencode "output_gene_data@demo_outputs.txt"
+        */
+
+        List<String> curlcommand = new ArrayList<>();
+        curlcommand.add("curl");
+        curlcommand.add("-u");
 
     }
 
@@ -175,7 +214,7 @@ public class Cello {
      * @param ucf
      */
     public void submitUCF(UCF ucf) throws UnirestException {
-        response = Unirest.post(UCF + SEP + ucf.getFilename()).basicAuth(username,password).body(ucf.getFiletext()).asJson();
+        response = Unirest.post(UCF + SEP + ucf.getFilename()).basicAuth(username,password).asJson();
 
     }
 

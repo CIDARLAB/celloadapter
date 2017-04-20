@@ -142,11 +142,11 @@ public class Job {
      */
     public Map<String,Object> getRequestFields() {
         HashMap<String,Object> ret = new HashMap<>();
-        ret.put("user_options", converFlagsToStrings());
-        ret.put("inputs", convertInputsToStrings());
-        ret.put("outputs", converOutputsToStrings());
-        ret.put("verilog", verilog);
-        ret.put("jobid", jobID);
+        ret.put("options", converFlagsToStrings());
+        ret.put("input_promoter_data", convertInputsToStrings());
+        ret.put("output_gene_data", converOutputsToStrings());
+        ret.put("verilog_text", verilog);
+        ret.put("id", jobID);
         return ret;
     }
 
