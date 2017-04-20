@@ -1,6 +1,7 @@
 package org.cidarlab.celloadapter;
 
 import com.mashape.unirest.http.exceptions.UnirestException;
+import org.cidarlab.celloadapter.results.DNACompiler;
 import org.cidarlab.celloadapter.results.OutputHistogram;
 import org.cidarlab.celloadapter.results.ResponseFunction;
 import org.cidarlab.celloadapter.results.BioNetList;
@@ -17,13 +18,16 @@ public class GarudaResults extends Results{
 
     private BioNetList gateNetList;
 
-    HashMap<String, ResponseFunction> gateResponses;
+    public HashMap<String, ResponseFunction> gateResponses;
 
-    HashMap<String, OutputHistogram> truth_histograms;
+    public HashMap<String, OutputHistogram> truth_histograms;
+
+    public DNACompiler dnaCompilerOutput;
 
     public GarudaResults(){
         gateResponses = new HashMap<>();
         truth_histograms = new HashMap<>();
+
     }
 
     public GarudaResults(String jobidString, ArrayList<String> fileslist) throws UnirestException, IOException {
@@ -56,5 +60,10 @@ public class GarudaResults extends Results{
             histogram = new OutputHistogram(jobID,s);
             truth_histograms.put(histogram.getName(),histogram);
         }
+
+        //5. Get the DNA  Compiler Output
+
+        String compileroutputfile = findFile("(.*)_dnacompiler_output.txt");
+        dnaCompilerOutput = new DNACompiler(jobID, compileroutputfile);
     }
 }

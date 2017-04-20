@@ -149,29 +149,10 @@ public class Cello {
      */
     public void submitJob(Job job) throws UnirestException {
         //response = Unirest.post(SUBMIT).basicAuth(username,password).fields(job.getRequestFields()).asJson();
-        Future<HttpResponse<JsonNode>> future = Unirest.post(SUBMIT)
+        HttpResponse<JsonNode> response = Unirest.post(SUBMIT)
                 //.header("accept", "application/json")
                 .basicAuth(username,password).fields(job.getRequestFields())
-                .asJsonAsync(new Callback<JsonNode>() {
-
-                    public void failed(UnirestException e) {
-                        System.out.println("The request has failed");
-                    }
-
-                    public void completed(HttpResponse<JsonNode> response) {
-                        int code = response.getStatus();
-                        //Map<String, String> headers = response.getHeaders();
-                        JsonNode body = response.getBody();
-                        InputStream rawBody = response.getRawBody();
-                    }
-
-                    public void cancelled() {
-                        System.out.println("The request has been cancelled");
-                    }
-
-                });
-
-
+                .asJson();
 
     }
 
