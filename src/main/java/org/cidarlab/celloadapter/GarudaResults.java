@@ -16,7 +16,7 @@ import java.util.HashMap;
 
 public class GarudaResults extends Results{
 
-    private BioNetList gateNetList;
+    public BioNetList gateNetList;
 
     public HashMap<String, ResponseFunction> gateResponses;
 

@@ -8,8 +8,14 @@ package org.cidarlab.celloadapter.results;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.LineIterator;
 
@@ -25,6 +31,7 @@ public class BioNetList extends Result {
 
     final String pattern = "\\s+";
     private SimpleDirectedGraph<String, DefaultEdge> directedGraph;
+    List<String> gates;
 
     /**
      *
@@ -34,6 +41,7 @@ public class BioNetList extends Result {
     public BioNetList(String jobidString, String filenameString) throws UnirestException, IOException {
         super(jobidString, filenameString);
         directedGraph = new SimpleDirectedGraph<>(DefaultEdge.class);
+        gates = new ArrayList<>();
         downloadFile();
         parseFile();
     }
@@ -65,9 +73,28 @@ public class BioNetList extends Result {
                 }
             }
 
+
+            //Make a gate list too
+            //TODO: This is a shitty way to do things - Cello should have better output formats
+
+            String filestring = FileUtils.readFileToString(fo);
+
+            String GATE_REGEX = "\\w+_\\w+";
+
+            Pattern regex = Pattern.compile(GATE_REGEX);
+            Matcher matcher = regex.matcher(filestring);
+            while(matcher.find()){
+                gates.add(filestring.substring(matcher.start(),matcher.end()));
+
+            }
+
+
         } catch (IOException ex) {
             Logger.getLogger(BioNetList.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
+
     }
 
     private String cleanToken(String token) {
@@ -77,5 +104,8 @@ public class BioNetList extends Result {
     public SimpleDirectedGraph<String, DefaultEdge> getDirectedGraph() {
         return directedGraph;
     }
-    
+
+    public List<String> getGates() {
+        return gates;
+    }
 }
