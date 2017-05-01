@@ -17,6 +17,22 @@ public class Job {
         return jobID;
     }
 
+    public String getVerilog() {
+        return verilog;
+    }
+
+    public String getInputsText() {
+        return convertInputsToStrings();
+    }
+
+    public String getOutputsText() {
+        return convertInputsToStrings();
+    }
+
+    public String getOptionsText() {
+        return converFlagsToStrings();
+    }
+
     public class Input{
 
         private final String name;
